@@ -38,11 +38,10 @@
 
 - (void)setup{
     self.backgroundColor = [UIColor clearColor];
-    
     _lineColor = [UIColor redColor];
     _lineWidth = 6;
     _pointSize = CGSizeMake(40, 40);
-    _contentInsets = UIEdgeInsetsMake(10, 10, 10, 10);
+    _contentInset = UIEdgeInsetsMake(10, 10, 10, 10);
     
     _drawingLayer = [CAShapeLayer layer];
     _drawingLayer.strokeColor = _lineColor.CGColor;
@@ -69,7 +68,7 @@
 }
 
 - (void)setLineColor:(UIColor *)lineColor{
-    _drawingLayer.strokeColor = lineColor.CGColor;
+    _lineColor = lineColor;
 }
 
 - (void)setLineWidth:(CGFloat)lineWidth{
@@ -80,8 +79,8 @@
     _pointSize = pointSize;
 }
 
-- (void)setContentInsets:(UIEdgeInsets)contentInsets{
-    _contentInsets = contentInsets;
+- (void)setContentInset:(UIEdgeInsets)contentInset{
+    _contentInset = contentInset;
 }
 
 - (void)setNormalImage:(UIImage *)normalImage{
@@ -96,16 +95,70 @@
     }];
 }
 
+- (void)setHighlightedImage:(UIImage *)highlightedImage{
+    [_points enumerateObjectsUsingBlock:^(UIButton * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [obj setImage:highlightedImage forState:UIControlStateHighlighted];
+    }];
+}
+
+- (void)setHighlightedLineColor:(UIColor *)highlightedLineColor{
+    _highlightedLineColor = highlightedLineColor;
+}
+
 - (void)layoutSubviews{
     [super layoutSubviews];
-    CGFloat w = (self.bounds.size.width - _contentInsets.left - _pointSize.width / 2 - _pointSize.width / 2 - _contentInsets.right) / 2;
-    CGFloat h = (self.bounds.size.height - _contentInsets.top - _pointSize.height / 2 - _pointSize.height / 2 - _contentInsets.bottom) / 2;
+    CGFloat w = (self.bounds.size.width - _contentInset.left - _pointSize.width / 2 - _pointSize.width / 2 - _contentInset.right) / 2;
+    CGFloat h = (self.bounds.size.height - _contentInset.top - _pointSize.height / 2 - _pointSize.height / 2 - _contentInset.bottom) / 2;
     [_points enumerateObjectsUsingBlock:^(UIButton * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         NSInteger row = idx / 3;
         NSInteger col = idx % 3;
         obj.bounds = CGRectMake(0, 0, _pointSize.width, _pointSize.height);
-        obj.center = CGPointMake(_contentInsets.left + _pointSize.width / 2 + w * col, _contentInsets.top + _pointSize.height / 2 + h * row);
+        obj.center = CGPointMake(_contentInset.left + _pointSize.width / 2 + w * col, _contentInset.top + _pointSize.height / 2 + h * row);
     }];
+}
+
+#pragma mark - UIControl
+
+- (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(nullable UIEvent *)event{
+    [self clean];
+    __block BOOL shouldBegin;
+    [_points enumerateObjectsUsingBlock:^(UIButton * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (CGRectContainsPoint(obj.frame, [touch locationInView:self])) {
+            shouldBegin = YES;
+            [_throughPoints addObject:obj];
+            obj.selected = YES;
+            [self.layer insertSublayer:obj.layer above:_drawingLayer];
+            [self draw];
+            *stop = YES;
+        }
+    }];
+    return shouldBegin;
+}
+
+- (BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event{
+    _fingerPoint = [NSValue valueWithCGPoint:[touch locationInView:self]];
+    [_points enumerateObjectsUsingBlock:^(UIButton * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (CGRectContainsPoint(obj.frame, [touch locationInView:self])) {
+            if (![_throughPoints containsObject:obj]) {
+                [_throughPoints addObject:obj];
+                obj.selected = YES;
+                [self.layer insertSublayer:obj.layer above:_drawingLayer];
+            }
+        }
+    }];
+    [self draw];
+    [self sendActionsForControlEvents:UIControlEventValueChanged];
+    return YES;
+}
+
+- (void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event{
+    _fingerPoint = nil;
+    [self draw];
+    if (self.didFinishDrawing) {
+        NSArray *tags = [_throughPoints valueForKeyPath:@"tag"];
+        NSString *pwd = [tags componentsJoinedByString:@""];
+        self.didFinishDrawing(self, pwd);
+    }
 }
 
 - (void)draw{
@@ -127,67 +180,46 @@
     }
 }
 
-#pragma mark - UIControl
-
-- (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(nullable UIEvent *)event{
-    [self clean];
-    __block BOOL shouldBegin;
-    [_points enumerateObjectsUsingBlock:^(UIButton * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (CGRectContainsPoint(obj.frame, [touch locationInView:self])) {
-            shouldBegin = YES;
-            [_throughPoints addObject:obj];
-            obj.selected = YES;
-            *stop = YES;
-        }
-    }];
-    [self draw];
-    return shouldBegin;
-}
-
-- (BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event{
-    [super continueTrackingWithTouch:touch withEvent:event];
-    _fingerPoint = [NSValue valueWithCGPoint:[touch locationInView:self]];
-    [_points enumerateObjectsUsingBlock:^(UIButton * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (CGRectContainsPoint(obj.frame, [touch locationInView:self])) {
-            if (![_throughPoints containsObject:obj]) {
-                [_throughPoints addObject:obj];
-            }
-        }
-        if ([_throughPoints containsObject:obj]) {
-            obj.selected = YES;
-            [self.layer insertSublayer:obj.layer above:_drawingLayer];
-        }else{
-            obj.selected = NO;
-            [self.layer insertSublayer:obj.layer below:_drawingLayer];
-        }
-    }];
-    
-    [self draw];
-    [self sendActionsForControlEvents:UIControlEventValueChanged];
-    
-    return YES;
-}
-
-- (void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event{
-    [super endTrackingWithTouch:touch withEvent:event];
-    if (self.didFinishDrawing) {
-        NSArray *tags = [_throughPoints valueForKeyPath:@"tag"];
-        NSString *pwd = [tags componentsJoinedByString:@""];
-        self.didFinishDrawing(self, pwd);
-    }
-}
-
 #pragma mark -
 
 - (void)clean{
     [_points enumerateObjectsUsingBlock:^(UIButton * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [self.layer insertSublayer:obj.layer below:_drawingLayer];
+        obj.highlighted = NO;
         obj.selected = NO;
     }];
+    _drawingLayer.strokeColor = _lineColor.CGColor;
+    _drawingLayer.path = NULL;
     [_throughPoints removeAllObjects];
-    _fingerPoint = nil;
-    [self draw];
 }
 
+- (void)cleanAfterDuration:(NSTimeInterval)duration completion:(void (^)())completion{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(duration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if (!self.isTracking || !self.isTouchInside) {
+            [self clean];
+        }
+        if (completion) {
+            completion();
+        }
+    });
+}
+
+- (void)highlightWithDuration:(NSTimeInterval)duration completion:(void (^)())completion{
+    _drawingLayer.strokeColor = _highlightedLineColor.CGColor;
+    [_throughPoints enumerateObjectsUsingBlock:^(UIButton * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        obj.selected = NO;
+        obj.highlighted = YES;
+    }];
+    [self draw];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(duration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if (!self.isTracking || !self.isTouchInside) {
+            [self clean];
+        }
+        if (completion) {
+            completion();
+        }
+    });
+}
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

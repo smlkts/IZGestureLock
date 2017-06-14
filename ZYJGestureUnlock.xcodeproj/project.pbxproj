@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		101805AB1EF0E6EB00F7D79B /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 101805AA1EF0E6EB00F7D79B /* RootViewController.m */; };
 		10290ABE1EEE8AE9008BE465 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 10290ABD1EEE8AE9008BE465 /* main.m */; };
 		10290AC11EEE8AE9008BE465 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 10290AC01EEE8AE9008BE465 /* AppDelegate.m */; };
 		10290AC41EEE8AE9008BE465 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 10290AC31EEE8AE9008BE465 /* ViewController.m */; };
@@ -17,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		101805A91EF0E6EB00F7D79B /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		101805AA1EF0E6EB00F7D79B /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		10290AB91EEE8AE9008BE465 /* ZYJGestureUnlock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZYJGestureUnlock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		10290ABD1EEE8AE9008BE465 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		10290ABF1EEE8AE9008BE465 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -63,6 +66,8 @@
 			children = (
 				10290ABF1EEE8AE9008BE465 /* AppDelegate.h */,
 				10290AC01EEE8AE9008BE465 /* AppDelegate.m */,
+				101805A91EF0E6EB00F7D79B /* RootViewController.h */,
+				101805AA1EF0E6EB00F7D79B /* RootViewController.m */,
 				10290AC21EEE8AE9008BE465 /* ViewController.h */,
 				10290AC31EEE8AE9008BE465 /* ViewController.m */,
 				10290AD31EEE8B79008BE465 /* ZYJGestureUnlockControl.h */,
@@ -159,6 +164,7 @@
 				10290AD51EEE8B79008BE465 /* ZYJGestureUnlockControl.m in Sources */,
 				10290AC11EEE8AE9008BE465 /* AppDelegate.m in Sources */,
 				10290ABE1EEE8AE9008BE465 /* main.m in Sources */,
+				101805AB1EF0E6EB00F7D79B /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -317,6 +323,7 @@
 				10290AD21EEE8AE9008BE465 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
