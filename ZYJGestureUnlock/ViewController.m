@@ -51,7 +51,7 @@ typedef NS_ENUM(NSUInteger, GestureUnlockType) {
             if (password.length < 4) {
                 fps.text = @"请至少选择4个连接点";
                 [self shake:fps];
-                [guc highlightWithDuration:2 completion:nil];
+                [guc highlightWithDuration:0.8 completion:nil];
             }else{
                 _unlockType = GestureUnlockConfirm;
                 fps.text = @"请再次绘制上一次的图案";
@@ -61,11 +61,13 @@ typedef NS_ENUM(NSUInteger, GestureUnlockType) {
         }else{
             if ([self.pwd isEqualToString:password]) {
                 fps.text = @"成功";
-                [guc cleanAfterDuration:2 completion:nil];
+                [guc cleanAfterDuration:0.8 completion:^{
+                    [self.navigationController popViewControllerAnimated:YES];
+                }];
             }else{
                 fps.text = @"跟上次不一样 重新来";
                 [self shake:fps];
-                [guc highlightWithDuration:2 completion:nil];
+                [guc highlightWithDuration:0.8 completion:nil];
             }
         }
     };
