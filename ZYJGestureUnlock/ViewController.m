@@ -24,7 +24,7 @@ typedef NS_ENUM(NSUInteger, GestureUnlockType) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    UILabel *fps = [[UILabel alloc] initWithFrame: CGRectMake(60, 65, 200, 30)];
+    UILabel *fps = [[UILabel alloc] initWithFrame: CGRectMake(0, 0, 245, 30)];
     fps.center = CGPointMake(self.view.bounds.size.width/2, 120);
     fps.textAlignment = NSTextAlignmentCenter;
     fps.backgroundColor = [UIColor redColor];
@@ -34,19 +34,16 @@ typedef NS_ENUM(NSUInteger, GestureUnlockType) {
     fps.text = @"请至少选择4个连接点";
     [self.view addSubview:fps];
     
-    ZYJGestureUnlockControl *ng = [[ZYJGestureUnlockControl alloc] initWithFrame:CGRectMake(0, 0, 295, 295)];
-    ng.center = CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height/2);
-    ng.lineWidth = 2;
-    
-    ng.lineColor = [UIColor greenColor];
-    ng.highlightedLineColor = [UIColor redColor];
-    ng.contentInset = UIEdgeInsetsMake(15, 15, 15, 15);
-    ng.pointSize = CGSizeMake(65, 65);
-    ng.normalImage = [UIImage imageNamed:@"p_nl"];
-    ng.selectedImage = [UIImage imageNamed:@"p_sl"];
-    ng.highlightedImage = [UIImage imageNamed:@"p_hl"];
-    [self.view addSubview:ng];
-    ng.didFinishDrawing = ^(ZYJGestureUnlockControl *guc, NSString *password) {
+    ZYJGestureUnlockControl *lock = [[ZYJGestureUnlockControl alloc] init];    
+    lock.lineWidth = 2;
+    lock.lineColor = [UIColor greenColor];
+    lock.highlightedLineColor = [UIColor redColor];
+    lock.contentInset = UIEdgeInsetsMake(15, 15, 15, 15);
+    lock.itemSize = CGSizeMake(65, 65);
+    lock.normalImage = [UIImage imageNamed:@"p_nl"];
+    lock.selectedImage = [UIImage imageNamed:@"p_sl"];
+    lock.highlightedImage = [UIImage imageNamed:@"p_hl"];
+    lock.didFinishDrawing = ^(ZYJGestureUnlockControl *guc, NSString *password) {
         if (_unlockType == GestureUnlockCreate) {
             if (password.length < 4) {
                 fps.text = @"请至少选择4个连接点";
@@ -71,6 +68,13 @@ typedef NS_ENUM(NSUInteger, GestureUnlockType) {
             }
         }
     };
+    [self.view addSubview:lock];
+
+    lock.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:lock attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:lock attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[lock(295)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(lock)]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[lock(295)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(lock)]];
 }
 
 - (void)shake:(UIView *)view {

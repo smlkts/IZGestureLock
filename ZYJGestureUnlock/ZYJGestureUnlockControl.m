@@ -40,7 +40,7 @@
     self.backgroundColor = [UIColor clearColor];
     _lineColor = [UIColor redColor];
     _lineWidth = 6;
-    _pointSize = CGSizeMake(40, 40);
+    _itemSize = CGSizeMake(40, 40);
     _contentInset = UIEdgeInsetsMake(10, 10, 10, 10);
     
     _drawingLayer = [CAShapeLayer layer];
@@ -75,8 +75,8 @@
     _drawingLayer.lineWidth = lineWidth;
 }
 
-- (void)setPointSize:(CGSize)pointSize{
-    _pointSize = pointSize;
+- (void)setItemSize:(CGSize)itemSize{
+    _itemSize = itemSize;
 }
 
 - (void)setContentInset:(UIEdgeInsets)contentInset{
@@ -107,13 +107,13 @@
 
 - (void)layoutSubviews{
     [super layoutSubviews];
-    CGFloat w = (self.bounds.size.width - _contentInset.left - _pointSize.width / 2 - _pointSize.width / 2 - _contentInset.right) / 2;
-    CGFloat h = (self.bounds.size.height - _contentInset.top - _pointSize.height / 2 - _pointSize.height / 2 - _contentInset.bottom) / 2;
+    CGFloat w = (self.bounds.size.width - _contentInset.left - _itemSize.width / 2 - _itemSize.width / 2 - _contentInset.right) / 2;
+    CGFloat h = (self.bounds.size.height - _contentInset.top - _itemSize.height / 2 - _itemSize.height / 2 - _contentInset.bottom) / 2;
     [_points enumerateObjectsUsingBlock:^(UIButton * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         NSInteger row = idx / 3;
         NSInteger col = idx % 3;
-        obj.bounds = CGRectMake(0, 0, _pointSize.width, _pointSize.height);
-        obj.center = CGPointMake(_contentInset.left + _pointSize.width / 2 + w * col, _contentInset.top + _pointSize.height / 2 + h * row);
+        obj.bounds = CGRectMake(0, 0, _itemSize.width, _itemSize.height);
+        obj.center = CGPointMake(_contentInset.left + _itemSize.width / 2 + w * col, _contentInset.top + _itemSize.height / 2 + h * row);
     }];
 }
 
