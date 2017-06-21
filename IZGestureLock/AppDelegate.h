@@ -1,8 +1,8 @@
 //
 //  AppDelegate.h
-//  ZYJGestureUnlock
+//  IZGestureLock
 //
-//  Created by 张雁军 on 12/06/2017.
+//  Created by 张雁军 on 21/06/2017.
 //  Copyright © 2017 张雁军. All rights reserved.
 //
 

@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:ZYJGestureUnlock.xcodeproj">
+      location = "self:IZGestureLock.xcodeproj">
    </FileRef>
 </Workspace>

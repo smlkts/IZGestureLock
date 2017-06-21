@@ -1,21 +1,21 @@
 //
-//  ZYJGestureUnlockControl.m
-//  ZYJGestureUnlock
+//  IZGestureLock.m
+//  IZGestureLock
 //
-//  Created by 张雁军 on 12/06/2017.
+//  Created by 张雁军 on 21/06/2017.
 //  Copyright © 2017 张雁军. All rights reserved.
 //
 
-#import "ZYJGestureUnlockControl.h"
+#import "IZGestureLock.h"
 
-@interface ZYJGestureUnlockControl ()
+@interface IZGestureLock ()
 @property (nonatomic, copy) NSArray <UIButton *> *points;
 @property (nonatomic) NSMutableArray <UIButton *> *throughPoints;
 @property (nonatomic) NSValue *fingerPoint;
 @property (nonatomic) CAShapeLayer *drawingLayer;
 @end
 
-@implementation ZYJGestureUnlockControl
+@implementation IZGestureLock
 
 - (instancetype)init{
     if (self = [super init]) {
@@ -61,7 +61,8 @@
         btn.tag = i + 1;
         btn.userInteractionEnabled = NO;
         btn.selected = NO;
-        [self.layer addSublayer:btn.layer];
+        [self addSubview:btn];
+//        [self.layer addSublayer:btn.layer]; //cause "View has lost track of its superview, most likely through unsupported use of CALayer"
         [points addObject:btn];
     }
     self.points = points;
@@ -220,6 +221,7 @@
         }
     });
 }
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

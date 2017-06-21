@@ -1,55 +1,51 @@
-# ZYJGestureUnlock
+# IZGestureLock
 
 [简书链接](http://www.jianshu.com/p/e829c09a0bba)
 
- ![](https://github.com/smlkts/ZYJGestureUnlock/raw/master/0.gif) 
- ![](https://github.com/smlkts/ZYJGestureUnlock/raw/master/1.gif)
+ ![](https://github.com/smlkts/IZGestureLock/raw/master/0.gif) 
+ ![](https://github.com/smlkts/IZGestureLock/raw/master/1.gif)
 
-## Adding `ZYJGestureUnlock` to your project
+## Adding `IZGestureLock` to your project
 
 ### CocoaPods
 
-[CocoaPods](http://cocoapods.org) is the recommended way to add ZYJGestureUnlock to your project.
-
-1. Add a pod entry for ZYJGestureUnlock to your Podfile `pod 'ZYJGestureUnlock', '~> 0.0.2'`
-2. Install the pod(s) by running `pod install`.
-3. Include ZYJGestureUnlock wherever you need it with `#import "ZYJGestureUnlockControl.h"`.
+`pod 'IZGestureLock', '~> 0.0.1'`
 
 ## Usage:
 ```objc
-    ZYJGestureUnlockControl *lock = [[ZYJGestureUnlockControl alloc] init];    
-    lock.lineWidth = 2;
-    lock.lineColor = [UIColor greenColor];
-    lock.highlightedLineColor = [UIColor redColor];
-    lock.contentInset = UIEdgeInsetsMake(15, 15, 15, 15);
-    lock.itemSize = CGSizeMake(65, 65);
-    lock.normalImage = [UIImage imageNamed:@"p_nl"];
-    lock.selectedImage = [UIImage imageNamed:@"p_sl"];
-    lock.highlightedImage = [UIImage imageNamed:@"p_hl"];
-    lock.didFinishDrawing = ^(ZYJGestureUnlockControl *guc, NSString *password) {
-        if (_unlockType == GestureUnlockCreate) {
+    IZGestureLock *gesturelock = [[IZGestureLock alloc] init];
+    gesturelock.lineWidth = 2;
+    gesturelock.lineColor = [UIColor greenColor];
+    gesturelock.highlightedLineColor = [UIColor redColor];
+    gesturelock.contentInset = UIEdgeInsetsMake(15, 15, 15, 15);
+    gesturelock.itemSize = CGSizeMake(65, 65);
+    gesturelock.normalImage = [UIImage imageNamed:@"p_nl"];
+    gesturelock.selectedImage = [UIImage imageNamed:@"p_sl"];
+    gesturelock.highlightedImage = [UIImage imageNamed:@"p_hl"];
+    gesturelock.didFinishDrawing = ^(IZGestureLock *lock, NSString *password) {
+        if (_lockType == GestureLockCreate) {
             if (password.length < 4) {
                 fps.text = @"请至少选择4个连接点";
                 [self shake:fps];
-                [guc highlightWithDuration:0.8 completion:nil];
+                [lock highlightWithDuration:0.8 completion:nil];
             }else{
-                _unlockType = GestureUnlockConfirm;
+                _lockType = GestureLockConfirm;
                 fps.text = @"请再次绘制上一次的图案";
                 self.pwd = password;
-                [guc clean];
+                [lock clean];
             }
         }else{
             if ([self.pwd isEqualToString:password]) {
                 fps.text = @"成功";
-                [guc cleanAfterDuration:0.8 completion:^{
+                [lock cleanAfterDuration:0.8 completion:^{
                     [self.navigationController popViewControllerAnimated:YES];
                 }];
             }else{
                 fps.text = @"跟上次不一样 重新来";
                 [self shake:fps];
-                [guc highlightWithDuration:0.8 completion:nil];
+                [lock highlightWithDuration:0.8 completion:nil];
             }
         }
     };
-    [self.view addSubview:lock];
+    [self.view addSubview:gesturelock];
 ```
