@@ -15,6 +15,12 @@
 		10350E671EFA23D500E392AF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 10350E651EFA23D500E392AF /* LaunchScreen.storyboard */; };
 		10350E701EFA23EF00E392AF /* IZGestureLock.m in Sources */ = {isa = PBXBuildFile; fileRef = 10350E6F1EFA23EF00E392AF /* IZGestureLock.m */; };
 		10350E731EFA244200E392AF /* LockController.m in Sources */ = {isa = PBXBuildFile; fileRef = 10350E721EFA244200E392AF /* LockController.m */; };
+		1077345F1EFBC9150068315A /* p_hl@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 107734591EFBC9150068315A /* p_hl@2x.png */; };
+		107734601EFBC9150068315A /* p_hl@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1077345A1EFBC9150068315A /* p_hl@3x.png */; };
+		107734611EFBC9150068315A /* p_nl@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1077345B1EFBC9150068315A /* p_nl@2x.png */; };
+		107734621EFBC9150068315A /* p_nl@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1077345C1EFBC9150068315A /* p_nl@3x.png */; };
+		107734631EFBC9150068315A /* p_sl@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1077345D1EFBC9150068315A /* p_sl@2x.png */; };
+		107734641EFBC9150068315A /* p_sl@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1077345E1EFBC9150068315A /* p_sl@3x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +38,12 @@
 		10350E6F1EFA23EF00E392AF /* IZGestureLock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IZGestureLock.m; sourceTree = "<group>"; };
 		10350E711EFA244200E392AF /* LockController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LockController.h; sourceTree = "<group>"; };
 		10350E721EFA244200E392AF /* LockController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LockController.m; sourceTree = "<group>"; };
+		107734591EFBC9150068315A /* p_hl@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "p_hl@2x.png"; sourceTree = "<group>"; };
+		1077345A1EFBC9150068315A /* p_hl@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "p_hl@3x.png"; sourceTree = "<group>"; };
+		1077345B1EFBC9150068315A /* p_nl@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "p_nl@2x.png"; sourceTree = "<group>"; };
+		1077345C1EFBC9150068315A /* p_nl@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "p_nl@3x.png"; sourceTree = "<group>"; };
+		1077345D1EFBC9150068315A /* p_sl@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "p_sl@2x.png"; sourceTree = "<group>"; };
+		1077345E1EFBC9150068315A /* p_sl@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "p_sl@3x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +82,12 @@
 				10350E5E1EFA23D500E392AF /* ViewController.m */,
 				10350E711EFA244200E392AF /* LockController.h */,
 				10350E721EFA244200E392AF /* LockController.m */,
+				107734591EFBC9150068315A /* p_hl@2x.png */,
+				1077345A1EFBC9150068315A /* p_hl@3x.png */,
+				1077345B1EFBC9150068315A /* p_nl@2x.png */,
+				1077345C1EFBC9150068315A /* p_nl@3x.png */,
+				1077345D1EFBC9150068315A /* p_sl@2x.png */,
+				1077345E1EFBC9150068315A /* p_sl@3x.png */,
 				10350E6E1EFA23EF00E392AF /* IZGestureLock.h */,
 				10350E6F1EFA23EF00E392AF /* IZGestureLock.m */,
 				10350E601EFA23D500E392AF /* Main.storyboard */,
@@ -147,9 +165,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				107734621EFBC9150068315A /* p_nl@3x.png in Resources */,
 				10350E671EFA23D500E392AF /* LaunchScreen.storyboard in Resources */,
+				107734611EFBC9150068315A /* p_nl@2x.png in Resources */,
 				10350E641EFA23D500E392AF /* Assets.xcassets in Resources */,
 				10350E621EFA23D500E392AF /* Main.storyboard in Resources */,
+				1077345F1EFBC9150068315A /* p_hl@2x.png in Resources */,
+				107734631EFBC9150068315A /* p_sl@2x.png in Resources */,
+				107734601EFBC9150068315A /* p_hl@3x.png in Resources */,
+				107734641EFBC9150068315A /* p_sl@3x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -323,6 +347,7 @@
 				10350E6D1EFA23D500E392AF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
